@@ -60,3 +60,17 @@ def create_collection():
             kwargs=params
         )
     )
+
+@server.post("/v2/vectordb/collections/describe")
+def describe_collection():
+    """
+    Describes the details of a collection.
+    """
+
+    payload = get_payload()
+
+    collectionName = payload.get('collectionName')
+
+    return execute(
+        lambda: milvus.describe_collection( collectionName )
+    )
