@@ -88,3 +88,21 @@ def drop_collection():
     return execute(
         lambda: milvus.drop_collection( collectionName )
     )
+
+@server.post("/v2/vectordb/collections/get_load_state")
+def get_load_state():
+    """
+    This operation returns the load status of a specific collection.
+    """
+
+    payload = get_payload()
+
+    collectionName = payload.get('collectionName')
+    partitionNames = payload.get('partitionNames')
+
+    return execute(
+        lambda: milvus.get_load_state(
+            collection_name=collectionName,
+            partition_name=partitionNames
+        )
+    )
