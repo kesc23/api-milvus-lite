@@ -74,3 +74,17 @@ def describe_collection():
     return execute(
         lambda: milvus.describe_collection( collectionName )
     )
+
+@server.post("/v2/vectordb/collections/drop")
+def drop_collection():
+    """
+    This operation drops the current collection and all data within the collection.
+    """
+
+    payload = get_payload()
+
+    collectionName = payload.get('collectionName')
+
+    return execute(
+        lambda: milvus.drop_collection( collectionName )
+    )
