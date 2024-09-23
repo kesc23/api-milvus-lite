@@ -2,7 +2,7 @@ from pymilvus import CollectionSchema, MilvusClient
 from pymilvus.milvus_client import IndexParams
 from operator import itemgetter
 from flask import request
-from server import server, client as milvus
+from server import server
 from response import execute
 
 def get_payload() -> dict: return request.json
@@ -27,7 +27,7 @@ def create_collection():
     params: dict          = payload.get('params', {})
 
     if indexParams is not None:
-        _p = milvus.prepare_index_params()
+        _p = server.milvus.prepare_index_params()
         for param in indexParams:
             _p.add_index(field_name=param["fieldName"], metric_type=param["metricType"], kwargs=param["params"])
         indexParams = _p
@@ -47,7 +47,7 @@ def create_collection():
         schema = _s
 
     return execute(
-        lambda: milvus.create_collection(
+        lambda: server.milvus.create_collection(
             collection_name=collectionName,
             dimension=dimension,
             primary_field_name=primaryFieldName,
@@ -72,7 +72,7 @@ def describe_collection():
     collectionName = payload.get('collectionName')
 
     return execute(
-        lambda: milvus.describe_collection( collectionName )
+        lambda: server.milvus.describe_collection( collectionName )
     )
 
 @server.post("/v2/vectordb/collections/drop")
@@ -86,11 +86,11 @@ def drop_collection():
     collectionName = payload.get('collectionName')
 
     return execute(
-        lambda: milvus.drop_collection( collectionName )
+        lambda: server.milvus.drop_collection( collectionName )
     )
 
 @server.post("/v2/vectordb/collections/get_load_state")
-def get_load_state():
+def get_collection_load_state():
     """
     This operation returns the load status of a specific collection.
     """
@@ -101,7 +101,7 @@ def get_load_state():
     partitionNames = payload.get('partitionNames')
 
     return execute(
-        lambda: milvus.get_load_state(
+        lambda: server.milvus.get_load_state(
             collection_name=collectionName,
             partition_name=partitionNames
         )
