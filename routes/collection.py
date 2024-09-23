@@ -106,3 +106,82 @@ def get_collection_load_state():
             partition_name=partitionNames
         )
     )
+
+@server.post("/v2/vectordb/collections/get_stats")
+def get_collection_stats():
+    """
+    This operation gets the number of entities in a collection.
+    """
+
+    payload = get_payload()
+    collectionName = payload.get('collectionName')
+
+    return execute(
+        lambda: server.milvus.get_collection_stats( collectionName )
+    )
+
+@server.post("/v2/vectordb/collections/has")
+def has_collection():
+    """
+    This operation checks whether a collection exists.
+    """
+
+    payload = get_payload()
+    collectionName = payload.get('collectionName')
+
+    return execute(
+        lambda: server.milvus.has_collection( collectionName )
+    )
+
+@server.post("/v2/vectordb/collections/list")
+def list_collections():
+    """
+    This operation lists all collections in the specified database.
+    """
+
+    return execute(
+        lambda: server.milvus.list_collections()
+    )
+
+@server.post("/v2/vectordb/collections/load")
+def load_collections():
+    """
+    This operation loads the data of the current collection into memory.
+    """
+
+    payload = get_payload()
+    collectionName = payload.get('collectionName')
+
+    return execute(
+        lambda: server.milvus.load_collection( collectionName )
+    )
+
+@server.post("/v2/vectordb/collections/release")
+def release_collection():
+    """
+    This operation releases the data of the current collection from memory.
+    """
+
+    payload = get_payload()
+    collectionName = payload.get('collectionName')
+
+    return execute(
+        lambda: server.milvus.release_collection( collectionName )
+    )
+
+# UNIMPLEMENTED
+# 
+# @server.post("/v2/vectordb/collections/rename")
+# def rename_collection():
+#     """
+#     This operation renames an existing collection and optionally moves the collection to a new database.
+#     """
+
+#     payload = get_payload()
+#     collectionName    = payload.get('collectionName')
+#     newCollectionName = payload.get('newCollectionName')
+
+#     return execute(
+#         lambda: server.milvus.rename_collection( collectionName, newCollectionName, "" )
+#     )
+
