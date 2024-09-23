@@ -2,6 +2,7 @@ from env import environment
 from flask import request
 from server import server as app
 from routes.collection import *
+from routes.vectors import *
 
 if __name__ == "__main__":
     try:
