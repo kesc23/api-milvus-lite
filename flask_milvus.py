@@ -1,6 +1,6 @@
 from os import environ
 from pymilvus import MilvusClient
-from flask import Flask
+from flask import Flask, request
 
 class Server(Flask):
 
@@ -9,6 +9,9 @@ class Server(Flask):
         self.milvus = None
         if environ.get('WERKZEUG_RUN_MAIN') == 'true':
             self.start_milvus()
+        
+    def get_payload() -> dict:
+        return request.json
 
     def start_milvus(self):
         if not self.milvus:
