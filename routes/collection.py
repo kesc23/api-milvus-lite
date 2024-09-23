@@ -1,11 +1,7 @@
 from pymilvus import CollectionSchema, MilvusClient
 from pymilvus.milvus_client import IndexParams
-from operator import itemgetter
-from flask import request
 from server import server
 from response import execute
-
-def get_payload() -> dict: return request.json
 
 @server.post("/v2/vectordb/collections/create")
 def create_collection():
@@ -13,7 +9,7 @@ def create_collection():
     This operation creates a collection in a specified cluster.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
 
     collectionName: str   = payload.get('collectionName')
     dimension             = payload.get('dimension')
@@ -67,7 +63,7 @@ def describe_collection():
     Describes the details of a collection.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
 
     collectionName = payload.get('collectionName')
 
@@ -81,7 +77,7 @@ def drop_collection():
     This operation drops the current collection and all data within the collection.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
 
     collectionName = payload.get('collectionName')
 
@@ -95,7 +91,7 @@ def get_collection_load_state():
     This operation returns the load status of a specific collection.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
 
     collectionName = payload.get('collectionName')
     partitionNames = payload.get('partitionNames')
@@ -113,7 +109,7 @@ def get_collection_stats():
     This operation gets the number of entities in a collection.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
     collectionName = payload.get('collectionName')
 
     return execute(
@@ -126,7 +122,7 @@ def has_collection():
     This operation checks whether a collection exists.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
     collectionName = payload.get('collectionName')
 
     return execute(
@@ -149,7 +145,7 @@ def load_collections():
     This operation loads the data of the current collection into memory.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
     collectionName = payload.get('collectionName')
 
     return execute(
@@ -162,7 +158,7 @@ def release_collection():
     This operation releases the data of the current collection from memory.
     """
 
-    payload = get_payload()
+    payload = server.get_payload()
     collectionName = payload.get('collectionName')
 
     return execute(
@@ -177,7 +173,7 @@ def release_collection():
 #     This operation renames an existing collection and optionally moves the collection to a new database.
 #     """
 
-#     payload = get_payload()
+#     payload = server.get_payload()
 #     collectionName    = payload.get('collectionName')
 #     newCollectionName = payload.get('newCollectionName')
 
