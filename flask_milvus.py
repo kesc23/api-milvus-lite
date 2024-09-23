@@ -10,7 +10,7 @@ class Server(Flask):
         if environ.get('WERKZEUG_RUN_MAIN') == 'true':
             self.start_milvus()
         
-    def get_payload() -> dict:
+    def get_payload(self) -> dict:
         return request.json
 
     def start_milvus(self):
