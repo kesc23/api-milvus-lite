@@ -1,7 +1,7 @@
 from env import environment
+from flask import request
 from server import server as app
 from routes.collection import *
-
 
 if __name__ == "__main__":
     try:
