@@ -133,6 +133,7 @@ def query_vector():
 
     collectionName = payload.get("collectionName")
     ids            = payload.get("ids")
+    limit          = payload.get("limit")
     filter         = payload.get("filter", "")
     outputFields   = payload.get("outputFields")
     partitionNames = payload.get("partitionNames")
@@ -142,6 +143,7 @@ def query_vector():
             collection_name=collectionName,
             ids=ids,
             filter=filter,
+            limit=limit,
             output_fields=outputFields,
             partition_names=partitionNames
         )
