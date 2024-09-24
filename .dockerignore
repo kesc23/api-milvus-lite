@@ -4,3 +4,8 @@ data/
 .env
 .gitattributes
 .gitignore
+.git/
+docker-compose.yml
+Dockerfile
+volumes
+.vscode
