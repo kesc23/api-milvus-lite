@@ -1,15 +1,15 @@
 import numpy as np
 from pymilvus import MilvusException
-from pymilvus.client.types import ExtraList, OmitZeroDict
-import pymilvus.client.types as mtype
+from pymilvus.client.types import ExtraList
+import pymilvus.client.types as types
 
 def success_response( data ):
     return_data = None
 
     match type(data):
-        case mtype.ExtraList:
+        case types.ExtraList:
             return_data = ExtraList(list(map(parse_extra_list, data)), extra=data.extra)
-        case mtype.OmitZeroDict:
+        case types.OmitZeroDict:
             data["ids"] = list(data["ids"])
             return_data = data
         case _: return_data = data
