@@ -4,7 +4,11 @@ An restful api for milvus lite to be used outside python ecosystem!
 
 Consume this api to use milvus lite with any other stack and secure ownership of its data!
 
-## v2 Features
+## API Versions Available
+![API v1 - Discontinued](https://img.shields.io/static/v1?label=API+v1&message=Discontinued&color=red&logo=milvus)<br>
+![API v2 - In Development](https://img.shields.io/static/v1?label=API+v2&message=In+Development&color=blue&logo=milvus)
+
+## Features
 
 ![Collectrions - Working](https://img.shields.io/static/v1?label=Collections&message=Working&color=2ea44f&logo=milvus)
 ![Vectors - Working](https://img.shields.io/static/v1?label=Vectors&message=Working&color=2ea44f&logo=milvus)
