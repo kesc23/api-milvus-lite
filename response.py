@@ -10,14 +10,28 @@ def success_response( data ):
         case types.ExtraList:
             return_data = ExtraList(list(map(parse_extra_list, data)), extra=data.extra)
         case types.OmitZeroDict:
-            data["ids"] = list(data["ids"])
-            return_data = data
+            return_data = parse_omit_zero_dict(data)
         case _: return_data = data
 
     return { "code": 0, "data": return_data }
 
 def error_response( error_code: int, message: str ):
     return { "code": error_code, "message": message }
+
+def parse_repeated_scalar_container( item ):
+    elems = []
+    for elem in item:
+        elems.append(elem)
+    return elems
+
+def parse_omit_zero_dict( dict: types.OmitZeroDict ):
+    data = {}
+    for item in dict:
+        if "RepeatedScalarContainer" in str(type(dict[item])):
+            data[item] = parse_repeated_scalar_container( dict[item] )
+        else:
+            data[item] = dict[item]
+    return data
 
 def parse_extra_list( item ):
     if type(item) == dict:
