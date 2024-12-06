@@ -38,14 +38,14 @@ def get_vector():
     payload = server.get_payload()
 
     collectionName = payload.get("collectionName")
-    ids            = payload.get("ids")
+    id             = payload.get("id")
     outputFields   = payload.get("outputFields")
     partitionName  = payload.get("partitionName")
 
     return execute(
         lambda: server.milvus.get(
             collection_name=collectionName,
-            ids=ids,
+            ids=id,
             output_fields=outputFields,
             partition_names=partitionName
         )
