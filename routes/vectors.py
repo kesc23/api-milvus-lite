@@ -72,8 +72,8 @@ def hybrid_search_vector():
 
             search_data["anns_field"] = annsField
             search_data["data"]       = data
-            search_data["limit"] = limit
-            search_data["param"] = {
+            search_data["limit"]      = limit
+            search_data["param"]      = {
                 "metric_type": metricType,
                 "params": params
             }
@@ -116,12 +116,16 @@ def insert_vector():
     collectionName = payload.get("collectionName")
     data           = payload.get("data")
 
-    return execute(
-        lambda: server.milvus.insert(
+    def parser():
+        res: dict = server.milvus.insert(
             collection_name=collectionName,
             data=data
         )
-    )
+        res["insertIds"] = res["ids"]
+        res["ids"] = None
+        return res
+
+    return execute(parser)
 
 @server.post("/v2/vectordb/entities/query")
 def query_vector():
